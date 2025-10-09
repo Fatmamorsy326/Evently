@@ -14,7 +14,7 @@ class CustomTextButton extends StatelessWidget {
       onTap: (){
         onTap();
       },
-      child: Text(text,style: GoogleFonts.inter(fontSize: 16.sp,fontWeight: FontWeight.w500,color: ColorsManager.blue,decoration: TextDecoration.underline,fontStyle: FontStyle.italic),),
+      child: Text(text,style: GoogleFonts.inter(fontSize: 16.sp,fontWeight: FontWeight.w700,color: ColorsManager.blue,decoration: TextDecoration.underline,decorationColor: ColorsManager.blue,fontStyle: FontStyle.italic),),
     );
   }
 }

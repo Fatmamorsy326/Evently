@@ -23,10 +23,6 @@ class ThemeManager {
         borderRadius: BorderRadius.circular(16.r),
         borderSide: BorderSide(width: 1,color: ColorsManager.grey),
       ),
-      errorBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(16.r),
-        borderSide: BorderSide(width: 1,color: ColorsManager.grey),
-      ),
       labelStyle: GoogleFonts.inter(color: ColorsManager.grey,
         fontWeight: FontWeight.w500,
         fontSize: 16.sp,),
@@ -50,8 +46,32 @@ class ThemeManager {
         fontWeight:FontWeight.w500 ,
         fontSize:16.sp ,
       ),
+      headlineSmall: GoogleFonts.inter(
+        fontWeight:FontWeight.w500 ,
+        fontSize:20.sp ,
+        color: ColorsManager.blue
+      ),
+      titleLarge: GoogleFonts.inter(fontWeight: FontWeight.w400,color: ColorsManager.blue)
     ),
+    appBarTheme: AppBarTheme(
+      backgroundColor: ColorsManager.white,
+      iconTheme: IconThemeData(
+        color: ColorsManager.blue
+      )
+    ),
+    outlinedButtonTheme: OutlinedButtonThemeData(
+      style: OutlinedButton.styleFrom(
+        padding: EdgeInsets.symmetric(vertical: 16.h),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadiusGeometry.circular(16.r),
 
+        ),
+        side: BorderSide(
+            color: ColorsManager.blue,
+            width: 1.w,
+          )
+      )
+    )
   );
   static final ThemeData dark =ThemeData(
     scaffoldBackgroundColor: ColorsManager.darkBlue,
