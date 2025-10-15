@@ -5,6 +5,28 @@ import 'package:google_fonts/google_fonts.dart';
 
 class ThemeManager {
   static final ThemeData light =ThemeData(
+    primaryColor: ColorsManager.blue,
+    useMaterial3: false,
+    bottomNavigationBarTheme: BottomNavigationBarThemeData(
+      selectedItemColor: ColorsManager.white,
+      unselectedItemColor: ColorsManager.white,
+      backgroundColor: ColorsManager.blue,
+      type: BottomNavigationBarType.fixed,
+      elevation: 0,
+      selectedIconTheme: IconThemeData(
+        size: 24,
+      ),
+      unselectedIconTheme: IconThemeData(
+        size: 24
+      ),
+    ),
+    floatingActionButtonTheme: FloatingActionButtonThemeData(
+      shape: StadiumBorder(
+          side: BorderSide(color: ColorsManager.white,width: 5.w)
+      ),
+      elevation: 0,
+      iconSize: 24,
+    ),
     scaffoldBackgroundColor: ColorsManager.white,
     inputDecorationTheme: InputDecorationTheme(
       border: OutlineInputBorder(
@@ -46,10 +68,25 @@ class ThemeManager {
         fontWeight:FontWeight.w500 ,
         fontSize:16.sp ,
       ),
+      bodyLarge: GoogleFonts.inter(
+        fontWeight:FontWeight.w500 ,
+        fontSize:16.sp ,
+        color: ColorsManager.white,
+      ),
       headlineSmall: GoogleFonts.inter(
         fontWeight:FontWeight.w500 ,
         fontSize:20.sp ,
         color: ColorsManager.blue
+      ),
+      headlineLarge: GoogleFonts.inter(
+        fontWeight: FontWeight.w700,
+        fontSize: 24,
+        color: ColorsManager.white,
+      ),
+      headlineMedium: GoogleFonts.inter(
+        fontWeight: FontWeight.w400,
+        fontSize: 14,
+        color: ColorsManager.white,
       ),
       titleLarge: GoogleFonts.inter(fontWeight: FontWeight.w400,color: ColorsManager.blue)
     ),
