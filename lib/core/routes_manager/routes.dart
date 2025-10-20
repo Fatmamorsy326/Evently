@@ -6,4 +6,5 @@ class Routes {
   static const String locationTap="/locationTap";
   static const String loveTap="/loveTap";
   static const String profileTap="/profileTap";
+  static const String createEvent="/createEvent";
 }

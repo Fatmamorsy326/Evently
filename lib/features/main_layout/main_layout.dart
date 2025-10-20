@@ -1,8 +1,9 @@
 import 'package:evently/core/resources/colors_manager.dart';
-import 'package:evently/features/Authentication/main_layout/home_tap/home_tap.dart';
-import 'package:evently/features/Authentication/main_layout/location_tap/location_tap.dart';
-import 'package:evently/features/Authentication/main_layout/love_tap/love_tap.dart';
-import 'package:evently/features/Authentication/main_layout/profile_tap/profile_tap.dart';
+import 'package:evently/core/routes_manager/routes.dart';
+import 'package:evently/features/main_layout/home_tap/home_tap.dart';
+import 'package:evently/features/main_layout/location_tap/location_tap.dart';
+import 'package:evently/features/main_layout/love_tap/love_tap.dart';
+import 'package:evently/features/main_layout/profile_tap/profile_tap.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -36,7 +37,7 @@ class _MainLayoutState extends State<MainLayout> {
         onTap: _onTap,
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _addEvent,
+        onPressed: _createEvent,
         child: Icon(Icons.add),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -48,6 +49,7 @@ class _MainLayoutState extends State<MainLayout> {
     });
   }
 
-  void _addEvent() {
+  void _createEvent() {
+    Navigator.pushNamed(context, Routes.createEvent);
   }
 }

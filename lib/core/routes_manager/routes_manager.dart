@@ -1,11 +1,12 @@
 import 'package:evently/core/routes_manager/routes.dart';
 import 'package:evently/features/Authentication/login/login.dart';
-import 'package:evently/features/Authentication/main_layout/home_tap/home_tap.dart';
-import 'package:evently/features/Authentication/main_layout/location_tap/location_tap.dart';
-import 'package:evently/features/Authentication/main_layout/love_tap/love_tap.dart';
-import 'package:evently/features/Authentication/main_layout/main_layout.dart';
-import 'package:evently/features/Authentication/main_layout/profile_tap/profile_tap.dart';
 import 'package:evently/features/Authentication/register/register.dart';
+import 'package:evently/features/create_event/create_event.dart';
+import 'package:evently/features/main_layout/home_tap/home_tap.dart';
+import 'package:evently/features/main_layout/location_tap/location_tap.dart';
+import 'package:evently/features/main_layout/love_tap/love_tap.dart';
+import 'package:evently/features/main_layout/main_layout.dart';
+import 'package:evently/features/main_layout/profile_tap/profile_tap.dart';
 import 'package:flutter/cupertino.dart';
 
 class RoutesManager {
@@ -34,6 +35,9 @@ class RoutesManager {
       }
       case Routes.loveTap:{
         return CupertinoPageRoute(builder: (context)=> LoveTap());
+      }
+      case Routes.createEvent:{
+        return CupertinoPageRoute(builder: (context)=> CreateEvent());
       }
     }
   }

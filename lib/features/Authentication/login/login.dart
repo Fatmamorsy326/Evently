@@ -1,7 +1,7 @@
 import 'package:evently/core/resources/colors_manager.dart';
 import 'package:evently/core/resources/images_manager.dart';
 import 'package:evently/core/routes_manager/routes.dart';
-import 'package:evently/features/Authentication/register/custom_text_button.dart';
+import 'package:evently/core/widgets/custom_text_button.dart';
 import 'package:evently/features/Authentication/validation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

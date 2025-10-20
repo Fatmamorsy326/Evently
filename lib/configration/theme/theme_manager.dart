@@ -51,6 +51,9 @@ class ThemeManager {
       prefixIconColor: ColorsManager.grey,
       suffixIconColor: ColorsManager.grey,
       fillColor: ColorsManager.grey,
+      hintStyle: GoogleFonts.inter(color: ColorsManager.grey,
+        fontWeight: FontWeight.w500,
+        fontSize: 16.sp,),
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
@@ -67,6 +70,7 @@ class ThemeManager {
       bodySmall: GoogleFonts.inter(
         fontWeight:FontWeight.w500 ,
         fontSize:16.sp ,
+        color: ColorsManager.black
       ),
       bodyLarge: GoogleFonts.inter(
         fontWeight:FontWeight.w500 ,
@@ -88,6 +92,9 @@ class ThemeManager {
         fontSize: 14,
         color: ColorsManager.white,
       ),
+      labelMedium: GoogleFonts.inter(fontWeight: FontWeight.w700,fontSize:14 ,color: ColorsManager.blue),
+      labelLarge: GoogleFonts.inter(fontWeight: FontWeight.w700,fontSize:20 ,color: ColorsManager.blue),
+      labelSmall: GoogleFonts.inter(fontWeight: FontWeight.w700,fontSize:14 ,color: ColorsManager.black,letterSpacing: 0.3,height: 1.4),
       titleLarge: GoogleFonts.inter(fontWeight: FontWeight.w400,color: ColorsManager.blue)
     ),
     appBarTheme: AppBarTheme(
@@ -108,6 +115,10 @@ class ThemeManager {
             width: 1.w,
           )
       )
+    ),
+    cardTheme: CardThemeData(
+      color: ColorsManager.white,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.r)),
     )
   );
   static final ThemeData dark =ThemeData(
