@@ -23,7 +23,7 @@ class _CustomTabBarState extends State<CustomTabBar> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: CategoryModel.allCategories.length,
+      length: CategoryModel.allCategories(context).length,
       child: TabBar(
         onTap: _onTap,
         isScrollable: true,
@@ -44,7 +44,7 @@ class _CustomTabBarState extends State<CustomTabBar> {
   }
 
   void _onTap(int index) {
-    widget.itemOnClicked?.call(CategoryModel.categories[index]);
+    widget.itemOnClicked?.call(CategoryModel.categories(context)[index]);
     setState(() {
       selectedIndex=index;
     });

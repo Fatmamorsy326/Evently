@@ -4,6 +4,7 @@ import 'package:evently/features/main_layout/home_tap/home_tap.dart';
 import 'package:evently/features/main_layout/location_tap/location_tap.dart';
 import 'package:evently/features/main_layout/love_tap/love_tap.dart';
 import 'package:evently/features/main_layout/profile_tap/profile_tap.dart';
+import 'package:evently/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -28,10 +29,10 @@ class _MainLayoutState extends State<MainLayout> {
       body: taps[currentIndex],
       bottomNavigationBar:BottomNavigationBar(
         items: [
-          BottomNavigationBarItem(icon: Icon(currentIndex!=0?Icons.home_outlined:Icons.home),label: "Home"),
-          BottomNavigationBarItem(icon: Icon(currentIndex!=1?Icons.location_on_outlined:Icons.location_on),label: "Map"),
-          BottomNavigationBarItem(icon: Icon(currentIndex!=2?Icons.favorite_border:Icons.favorite),label: "Love"),
-          BottomNavigationBarItem(icon: Icon(currentIndex!=3?Icons.person_2_outlined:Icons.person_2_rounded),label: "Profile"),
+          BottomNavigationBarItem(icon: Icon(currentIndex!=0?Icons.home_outlined:Icons.home),label: AppLocalizations.of(context)!.home),
+          BottomNavigationBarItem(icon: Icon(currentIndex!=1?Icons.location_on_outlined:Icons.location_on),label: AppLocalizations.of(context)!.map),
+          BottomNavigationBarItem(icon: Icon(currentIndex!=2?Icons.favorite_border:Icons.favorite),label: AppLocalizations.of(context)!.favourite),
+          BottomNavigationBarItem(icon: Icon(currentIndex!=3?Icons.person_2_outlined:Icons.person_2_rounded),label: AppLocalizations.of(context)!.profile),
         ],
         currentIndex: currentIndex,
         onTap: _onTap,

@@ -1,9 +1,8 @@
-import 'package:evently/core/resources/colors_manager.dart';
 import 'package:evently/core/resources/images_manager.dart';
 import 'package:evently/core/routes_manager/routes.dart';
-import 'package:evently/core/routes_manager/routes_manager.dart';
-import 'package:evently/features/Authentication/register/custom_text_button.dart';
+import 'package:evently/core/widgets/custom_text_button.dart';
 import 'package:evently/features/Authentication/validation.dart';
+import 'package:evently/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -58,7 +57,7 @@ class _RegisterState extends State<Register> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Register",style: Theme.of(context).textTheme.titleLarge,),
+        title: Text(AppLocalizations.of(context)!.register,style: Theme.of(context).textTheme.titleLarge,),
         centerTitle: true,
       ),
        resizeToAvoidBottomInset: false,
@@ -78,7 +77,7 @@ class _RegisterState extends State<Register> {
                  keyboardType: TextInputType.name,
                  decoration: InputDecoration(
                    prefixIcon: Icon(Icons.person),
-                   labelText: "Name",
+                   labelText: AppLocalizations.of(context)!.name,
                  ),
                ),
                SizedBox(height: 16.h,),
@@ -88,7 +87,7 @@ class _RegisterState extends State<Register> {
                  keyboardType: TextInputType.emailAddress,
                  decoration: InputDecoration(
                    prefixIcon: Icon(Icons.email),
-                   labelText: "E-mail",
+                   labelText: AppLocalizations.of(context)!.email,
                  ),
                ),
                SizedBox(height: 16.h,),
@@ -99,7 +98,7 @@ class _RegisterState extends State<Register> {
                  keyboardType: TextInputType.visiblePassword,
                  decoration: InputDecoration(
                    prefixIcon: Icon(Icons.lock),
-                   labelText: "Password",
+                   labelText: AppLocalizations.of(context)!.password,
                    suffixIcon: IconButton(icon: isSecurePassword?Icon(Icons.visibility_off):Icon(Icons.visibility), onPressed: () {
                      togglePasswordVisibility();
                    },),
@@ -115,7 +114,7 @@ class _RegisterState extends State<Register> {
                  obscureText: isSecureRePassword,
                  decoration: InputDecoration(
                    prefixIcon: Icon(Icons.lock),
-                   labelText: "Re-password",
+                   labelText: AppLocalizations.of(context)!.re_password,
                    suffixIcon: IconButton(icon: isSecureRePassword?Icon(Icons.visibility_off):Icon(Icons.visibility), onPressed: () {
                      toggleRePasswordVisibility();
                    },),
@@ -126,13 +125,13 @@ class _RegisterState extends State<Register> {
                  width: double.infinity,
                    child: ElevatedButton(onPressed: (){
                      createAccount();
-                   }, child: Text("Create Account"))),
+                   }, child: Text(AppLocalizations.of(context)!.create_account))),
                SizedBox(height: 16.h,),
                Row(
                  mainAxisAlignment: MainAxisAlignment.center,
                  children: [
-                   Text("Already Have Account ?",style: Theme.of(context).textTheme.bodySmall,),
-                   CustomTextButton(text:"Login" ,onTap:(){
+                   Text(AppLocalizations.of(context)!.already_have_account,style: Theme.of(context).textTheme.bodySmall,),
+                   CustomTextButton(text:AppLocalizations.of(context)!.login,onTap:(){
                      Navigator.pushReplacementNamed(context, Routes.login);
                    } ,),
                  ],

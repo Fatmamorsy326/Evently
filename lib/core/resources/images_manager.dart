@@ -11,4 +11,5 @@ class ImagesManager {
   static const String meeting="${base}meeting.png";
   static const String sport="${base}Sport.png";
   static const String workshop="${base}workshop.png";
+  static const String rectangle="${base}Rectangle 76.png";
 }

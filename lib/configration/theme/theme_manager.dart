@@ -95,6 +95,7 @@ class ThemeManager {
       labelMedium: GoogleFonts.inter(fontWeight: FontWeight.w700,fontSize:14 ,color: ColorsManager.blue),
       labelLarge: GoogleFonts.inter(fontWeight: FontWeight.w700,fontSize:20 ,color: ColorsManager.blue),
       labelSmall: GoogleFonts.inter(fontWeight: FontWeight.w700,fontSize:14 ,color: ColorsManager.black,letterSpacing: 0.3,height: 1.4),
+      titleMedium: GoogleFonts.inter(fontWeight: FontWeight.w700,fontSize:20 ,color: ColorsManager.black,letterSpacing: 0.3,height: 1.4),
       titleLarge: GoogleFonts.inter(fontWeight: FontWeight.w400,color: ColorsManager.blue)
     ),
     appBarTheme: AppBarTheme(
@@ -122,7 +123,125 @@ class ThemeManager {
     )
   );
   static final ThemeData dark =ThemeData(
+    primaryColor: ColorsManager.darkBlue,
+    iconTheme: IconThemeData(
+      color: ColorsManager.white
+    ),
+    useMaterial3: false,
+    bottomNavigationBarTheme: BottomNavigationBarThemeData(
+      selectedItemColor: ColorsManager.white,
+      unselectedItemColor: ColorsManager.white,
+      backgroundColor: ColorsManager.darkBlue,
+      type: BottomNavigationBarType.fixed,
+      elevation: 0,
+      selectedIconTheme: IconThemeData(
+        size: 24,
+      ),
+      unselectedIconTheme: IconThemeData(
+        size: 24
+      ),
+    ),
+    floatingActionButtonTheme: FloatingActionButtonThemeData(
+      shape: StadiumBorder(
+          side: BorderSide(color: ColorsManager.white,width: 5.w)
+      ),
+      backgroundColor: ColorsManager.darkBlue,
+      elevation: 0,
+      iconSize: 24,
+    ),
     scaffoldBackgroundColor: ColorsManager.darkBlue,
+    inputDecorationTheme: InputDecorationTheme(
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(16.r),
+        borderSide: BorderSide(width: 1,color: ColorsManager.blue),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(16.r),
+        borderSide: BorderSide(width: 1,color: ColorsManager.blue),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(16.r),
+        borderSide: BorderSide(width: 1,color: ColorsManager.blue),
+      ),
+      disabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(16.r),
+        borderSide: BorderSide(width: 1,color: ColorsManager.blue),
+      ),
+      labelStyle: GoogleFonts.inter(color: ColorsManager.white,
+        fontWeight: FontWeight.w500,
+        fontSize: 16.sp,),
+      prefixIconColor: ColorsManager.white,
+      suffixIconColor: ColorsManager.white,
+      fillColor: ColorsManager.white,
+      hintStyle: GoogleFonts.inter(color: ColorsManager.white,
+        fontWeight: FontWeight.w500,
+        fontSize: 16.sp,),
+    ),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: ColorsManager.blue,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadiusGeometry.circular(16.r),
+        ),
+        padding: REdgeInsets.symmetric(vertical: 16,horizontal: 16),
+        foregroundColor: ColorsManager.white,
+        textStyle: GoogleFonts.inter(fontSize:20.sp ,fontWeight: FontWeight.w500)
+      )
+    ),
+    textTheme: TextTheme(
+      bodySmall: GoogleFonts.inter(
+        fontWeight:FontWeight.w500 ,
+        fontSize:16.sp ,
+        color: ColorsManager.white
+      ),
+      bodyLarge: GoogleFonts.inter(
+        fontWeight:FontWeight.w500 ,
+        fontSize:16.sp ,
+        color: ColorsManager.white,
+      ),
+      headlineSmall: GoogleFonts.inter(
+        fontWeight:FontWeight.w500 ,
+        fontSize:20.sp ,
+        color: ColorsManager.darkBlue
+      ),
+      headlineLarge: GoogleFonts.inter(
+        fontWeight: FontWeight.w700,
+        fontSize: 24,
+        color: ColorsManager.white,
+      ),
+      headlineMedium: GoogleFonts.inter(
+        fontWeight: FontWeight.w400,
+        fontSize: 14,
+        color: ColorsManager.white,
+      ),
+      labelMedium: GoogleFonts.inter(fontWeight: FontWeight.w700,fontSize:14 ,color: ColorsManager.blue),
+      labelLarge: GoogleFonts.inter(fontWeight: FontWeight.w700,fontSize:20 ,color: ColorsManager.blue),
+      labelSmall: GoogleFonts.inter(fontWeight: FontWeight.w700,fontSize:14 ,color: ColorsManager.white,letterSpacing: 0.3,height: 1.4),
+      titleMedium: GoogleFonts.inter(fontWeight: FontWeight.w700,fontSize:20 ,color: ColorsManager.white,letterSpacing: 0.3,height: 1.4),
+      titleLarge: GoogleFonts.inter(fontWeight: FontWeight.w400,color: ColorsManager.blue)
+    ),
+    appBarTheme: AppBarTheme(
+      backgroundColor: ColorsManager.darkBlue,
+      iconTheme: IconThemeData(
+        color: ColorsManager.blue
+      )
+    ),
+    outlinedButtonTheme: OutlinedButtonThemeData(
+      style: OutlinedButton.styleFrom(
+        padding: EdgeInsets.symmetric(vertical: 16.h),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadiusGeometry.circular(16.r),
 
+        ),
+        side: BorderSide(
+            color: ColorsManager.blue,
+            width: 1.w,
+          )
+      )
+    ),
+    cardTheme: CardThemeData(
+      color: ColorsManager.darkBlue,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.r)),
+    )
   );
 }

@@ -1,5 +1,6 @@
 import 'package:evently/core/resources/colors_manager.dart';
 import 'package:evently/core/widgets/event_item.dart';
+import 'package:evently/l10n/app_localizations.dart';
 import 'package:evently/models/category_model.dart';
 import 'package:evently/models/event_model.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +18,7 @@ class LoveTap extends StatelessWidget {
             padding:  REdgeInsets.symmetric(horizontal: 16,vertical: 8),
             child: TextField(
               decoration: InputDecoration(
-                hintText: "Search for Event",
+                hintText: AppLocalizations.of(context)!.search_for_event,
                 hintStyle: Theme.of(context).textTheme.labelMedium,
                 prefixIcon: Icon(Icons.search,color: ColorsManager.blue,size: 24,),
                 enabledBorder: OutlineInputBorder(
@@ -34,7 +35,7 @@ class LoveTap extends StatelessWidget {
           Expanded(
             child: ListView.builder(
               padding: EdgeInsets.zero,
-              itemBuilder: (context, index) => EventItem(event: EventModel(category: CategoryModel.allCategories[5], title: "This is a Birthday Party", description: "sdfghjm", date: DateTime.now(), time: TimeOfDay.now()),),
+              itemBuilder: (context, index) => EventItem(event: EventModel(category: CategoryModel.allCategories(context)[5], title: "This is a Birthday Party", description: "sdfghjm", date: DateTime.now(), time: TimeOfDay.now()),),
               itemCount: 5,),
           )
         ],

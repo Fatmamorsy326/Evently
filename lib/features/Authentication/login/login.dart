@@ -3,6 +3,7 @@ import 'package:evently/core/resources/images_manager.dart';
 import 'package:evently/core/routes_manager/routes.dart';
 import 'package:evently/core/widgets/custom_text_button.dart';
 import 'package:evently/features/Authentication/validation.dart';
+import 'package:evently/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -57,7 +58,7 @@ class _LoginState extends State<Login> {
                 keyboardType: TextInputType.emailAddress,
                 decoration: InputDecoration(
                   prefixIcon: Icon(Icons.email),
-                  labelText: "E-mail",
+                  labelText: AppLocalizations.of(context)!.email,
                 ),
               ),
               SizedBox(height: 16.h,),
@@ -68,7 +69,7 @@ class _LoginState extends State<Login> {
                 keyboardType: TextInputType.visiblePassword,
                 decoration: InputDecoration(
                   prefixIcon: Icon(Icons.lock),
-                  labelText: "Password",
+                  labelText: AppLocalizations.of(context)!.password,
                   suffixIcon: IconButton(icon: isSecurePassword?Icon(Icons.visibility_off):Icon(Icons.visibility), onPressed: () {
                     togglePasswordVisibility();
                   },),
@@ -78,7 +79,7 @@ class _LoginState extends State<Login> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  CustomTextButton(text: "Forget Password?", onTap: (){}),
+                  CustomTextButton(text: AppLocalizations.of(context)!.forget_password, onTap: (){}),
                 ],
               ),
               SizedBox(height: 16.h,),
@@ -86,13 +87,13 @@ class _LoginState extends State<Login> {
                   width: double.infinity,
                   child: ElevatedButton(onPressed: (){
                     login();
-                  }, child: Text("Login"))),
+                  }, child: Text(AppLocalizations.of(context)!.login))),
               SizedBox(height: 16.h,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("Don’t Have Account ?",style: Theme.of(context).textTheme.bodySmall,),
-                  CustomTextButton(text:"Create Account" ,onTap:(){
+                  Text(AppLocalizations.of(context)!.dont_have_account,style: Theme.of(context).textTheme.bodySmall,),
+                  CustomTextButton(text:AppLocalizations.of(context)!.create_account,onTap:(){
                     Navigator.pushNamed(context, Routes.register);
                   } ,),
                 ],
@@ -108,7 +109,11 @@ class _LoginState extends State<Login> {
                       color: ColorsManager.blue,
                     ),
                   ),
-                  Text("Or",style: Theme.of(context).textTheme.headlineSmall,),
+                  Text(AppLocalizations.of(context)!.or,style: GoogleFonts.inter(
+                      fontWeight:FontWeight.w500 ,
+                      fontSize:20.sp ,
+                      color: ColorsManager.blue
+                  ),),
                   Expanded(
                     child: Divider(
                       endIndent: 26.w,
@@ -124,7 +129,11 @@ class _LoginState extends State<Login> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SvgPicture.asset(ImagesManager.google),
-                  Text(" Login With Google",style: Theme.of(context).textTheme.headlineSmall,)
+                  Text(AppLocalizations.of(context)!.login_with_google,style: GoogleFonts.inter(
+                      fontWeight:FontWeight.w500 ,
+                      fontSize:20.sp ,
+                      color: ColorsManager.blue
+                  ),)
                 ],
               )),
             ],
