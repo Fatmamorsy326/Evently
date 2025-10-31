@@ -1,4 +1,5 @@
 import 'package:evently/configration/theme/theme_manager.dart';
+import 'package:evently/core/prefs_manager/prefs_manager.dart';
 import 'package:evently/core/routes_manager/routes.dart';
 import 'package:evently/core/routes_manager/routes_manager.dart';
 import 'package:evently/l10n/app_localizations.dart';
@@ -8,7 +9,9 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
-void main(){
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await PrefsManager.init();
   return runApp(ChangeNotifierProvider(
       child: Evently(),
     create: (context) => ConfigProvider(),
