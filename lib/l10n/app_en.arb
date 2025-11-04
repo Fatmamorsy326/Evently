@@ -1,8 +1,12 @@
 {
 "register": "Register",
+"some_thing_wrong": "something went wrong",
+"successfully_login": "successfully login",
+"successfully_registration": "successfully Registration",
+"invalid_email_password": "Invalid email or password",
 "name": "Name",
 "email": "E-mail",
-"password": "Re-Password",
+"password": "Password",
 "welcome_back": "Welcome Back",
 "create_account": "Create Account",
 "already_have_account": "Already Have Account?",

@@ -1,7 +1,9 @@
 import 'package:evently/core/resources/colors_manager.dart';
 import 'package:evently/core/resources/images_manager.dart';
 import 'package:evently/core/widgets/custom_drop_down_button.dart';
+import 'package:evently/firebase/firebase_service.dart';
 import 'package:evently/l10n/app_localizations.dart';
+import 'package:evently/models/user_model.dart';
 import 'package:evently/providers/config_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -39,12 +41,12 @@ class _ProfileTapState extends State<ProfileTap> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("fatma morsy",style: GoogleFonts.inter(fontSize:24.sp ,fontWeight: FontWeight.w700,color: ColorsManager.white,decoration: TextDecoration.none,
+                      Text(UserModel.currentUser!.userName,style: GoogleFonts.inter(fontSize:24.sp ,fontWeight: FontWeight.w700,color: ColorsManager.white,decoration: TextDecoration.none,
                       ),),
                       SizedBox(
                         height: 10.h,
                       ),
-                      Text("johnsafwat.route@gmail.com",style: GoogleFonts.inter(fontSize:16.sp ,fontWeight: FontWeight.w500,color: ColorsManager.white,decoration: TextDecoration.none,
+                      Text(UserModel.currentUser!.email,style: GoogleFonts.inter(fontSize:16.sp ,fontWeight: FontWeight.w500,color: ColorsManager.white,decoration: TextDecoration.none,
                       ),),
                     ],
                   ),
@@ -71,7 +73,9 @@ class _ProfileTapState extends State<ProfileTap> {
                     newTheme==AppLocalizations.of(context)!.dark?configProvider.changeTheme(ThemeMode.dark):configProvider.changeTheme(ThemeMode.light);
                   },),
                   Spacer(),
-                  ElevatedButton(onPressed: (){},
+                  ElevatedButton(onPressed: (){
+                    FirebaseService.logout(context);
+                  },
                     style: ElevatedButton.styleFrom(
                         backgroundColor: ColorsManager.babyRed,
                         padding: REdgeInsets.all(16),

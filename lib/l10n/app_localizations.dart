@@ -104,6 +104,30 @@ abstract class AppLocalizations {
   /// **'Register'**
   String get register;
 
+  /// No description provided for @some_thing_wrong.
+  ///
+  /// In en, this message translates to:
+  /// **'something went wrong'**
+  String get some_thing_wrong;
+
+  /// No description provided for @successfully_login.
+  ///
+  /// In en, this message translates to:
+  /// **'successfully login'**
+  String get successfully_login;
+
+  /// No description provided for @successfully_registration.
+  ///
+  /// In en, this message translates to:
+  /// **'successfully Registration'**
+  String get successfully_registration;
+
+  /// No description provided for @invalid_email_password.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid email or password'**
+  String get invalid_email_password;
+
   /// No description provided for @name.
   ///
   /// In en, this message translates to:
@@ -119,7 +143,7 @@ abstract class AppLocalizations {
   /// No description provided for @password.
   ///
   /// In en, this message translates to:
-  /// **'Re-Password'**
+  /// **'Password'**
   String get password;
 
   /// No description provided for @welcome_back.

@@ -10,7 +10,7 @@ static String? emailValidation(String? email){
   return null;
 }
 static String? passwordValidation(String? password){
-  final RegExp regex = RegExp(r'^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)[A-Za-z\d]{8,}$');
+  final RegExp regex = RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
   if(password==null || password.trim().isEmpty){
     return "password is required";
   }

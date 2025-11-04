@@ -4,6 +4,7 @@ import 'package:evently/core/widgets/event_item.dart';
 import 'package:evently/l10n/app_localizations.dart';
 import 'package:evently/models/category_model.dart';
 import 'package:evently/models/event_model.dart';
+import 'package:evently/models/user_model.dart';
 import 'package:evently/providers/config_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -32,7 +33,7 @@ class HomeTap extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(AppLocalizations.of(context)!.welcome_back,style: Theme.of(context).textTheme.headlineMedium,),
-                      Text("Fatma Morsy",style: Theme.of(context).textTheme.headlineLarge),
+                      Text(UserModel.currentUser!.userName,style: Theme.of(context).textTheme.headlineLarge),
                     ],
                   ),
                   Spacer(),

@@ -1,8 +1,14 @@
+import 'package:evently/core/UIUtils.dart';
+import 'package:evently/core/resources/colors_manager.dart';
 import 'package:evently/core/resources/images_manager.dart';
 import 'package:evently/core/routes_manager/routes.dart';
 import 'package:evently/core/widgets/custom_text_button.dart';
 import 'package:evently/features/Authentication/validation.dart';
+import 'package:evently/firebase/firebase_service.dart';
 import 'package:evently/l10n/app_localizations.dart';
+import 'package:evently/models/register_request.dart';
+import 'package:evently/models/user_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -56,13 +62,9 @@ class _RegisterState extends State<Register> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.register,style: Theme.of(context).textTheme.titleLarge,),
-        centerTitle: true,
-      ),
        resizeToAvoidBottomInset: false,
        body: SingleChildScrollView(
-         padding:REdgeInsets.only(left: 16,right: 16, bottom: MediaQuery.of(context).viewInsets.bottom) ,
+         padding:REdgeInsets.only(left: 16,right: 16, bottom: MediaQuery.of(context).viewInsets.bottom,top: 47.h) ,
          child: Form(
            key: regFormKey,
            child: Column(
@@ -143,9 +145,23 @@ class _RegisterState extends State<Register> {
     );
   }
 
-  void createAccount() {
+  Future<void> createAccount() async {
     if(regFormKey.currentState?.validate()==false){
       return;
+    }
+    try {
+      UIUtils.showLoading(context);
+      UserCredential userCredential= await FirebaseService.register(RegisterRequest(password: passwordController.text, email: emailController.text));
+      await FirebaseService.addUserToFirebase(UserModel(userId: userCredential.user!.uid, email: emailController.text, userName: nameController.text));
+      UIUtils.hideLoading(context);
+      UIUtils.showMsg(AppLocalizations.of(context)!.successfully_registration,Colors.green);
+      Navigator.pushReplacementNamed(context, Routes.login);
+    } on FirebaseAuthException catch (e) {
+      UIUtils.hideLoading(context);
+      UIUtils.showMsg(e.code,ColorsManager.red);
+    } catch (e) {
+      UIUtils.hideLoading(context);
+      UIUtils.showMsg(AppLocalizations.of(context)!.some_thing_wrong,ColorsManager.red);
     }
   }
 }

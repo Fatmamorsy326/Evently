@@ -12,13 +12,25 @@ class AppLocalizationsAr extends AppLocalizations {
   String get register => 'تسجيل';
 
   @override
+  String get some_thing_wrong => 'حدث خطا ما';
+
+  @override
+  String get successfully_login => 'تم الدخول بنجاح';
+
+  @override
+  String get successfully_registration => 'تم التسجيل بنجاح';
+
+  @override
+  String get invalid_email_password => 'ايميل او كلمه مرور غير صحيحه';
+
+  @override
   String get name => 'الاسم';
 
   @override
   String get email => 'البريد الإلكتروني';
 
   @override
-  String get password => 'أعد كتابة كلمة المرور';
+  String get password => ' كلمة المرور';
 
   @override
   String get welcome_back => 'مرحباً بعودتك';

@@ -12,13 +12,25 @@ class AppLocalizationsEn extends AppLocalizations {
   String get register => 'Register';
 
   @override
+  String get some_thing_wrong => 'something went wrong';
+
+  @override
+  String get successfully_login => 'successfully login';
+
+  @override
+  String get successfully_registration => 'successfully Registration';
+
+  @override
+  String get invalid_email_password => 'Invalid email or password';
+
+  @override
   String get name => 'Name';
 
   @override
   String get email => 'E-mail';
 
   @override
-  String get password => 'Re-Password';
+  String get password => 'Password';
 
   @override
   String get welcome_back => 'Welcome Back';

@@ -1,9 +1,15 @@
+import 'package:evently/core/UIUtils.dart';
 import 'package:evently/core/resources/colors_manager.dart';
 import 'package:evently/core/resources/images_manager.dart';
 import 'package:evently/core/routes_manager/routes.dart';
 import 'package:evently/core/widgets/custom_text_button.dart';
 import 'package:evently/features/Authentication/validation.dart';
+import 'package:evently/firebase/firebase_service.dart';
 import 'package:evently/l10n/app_localizations.dart';
+import 'package:evently/models/login_request.dart';
+import 'package:evently/models/register_request.dart';
+import 'package:evently/models/user_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -143,7 +149,18 @@ class _LoginState extends State<Login> {
     );
   }
 
-  void login() {
+  Future<void> login() async {
     if(loginFormKey.currentState?.validate()==false)return;
+    try {
+      UIUtils.showLoading(context);
+      UserCredential userCredential= await FirebaseService.login(LoginRequest(password: passwordController.text, email: emailController.text));
+      UserModel.currentUser =await FirebaseService.getUserFromFirestore(userCredential.user!.uid);
+      UIUtils.hideLoading(context);
+      UIUtils.showMsg(AppLocalizations.of(context)!.successfully_login,Colors.green);
+      Navigator.pushReplacementNamed(context, Routes.mainLayout);
+    } on FirebaseAuthException catch (e) {
+      UIUtils.showMsg(AppLocalizations.of(context)!.invalid_email_password, ColorsManager.red);
+      UIUtils.hideLoading(context);
+    }
   }
 }
