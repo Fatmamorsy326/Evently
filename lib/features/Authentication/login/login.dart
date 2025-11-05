@@ -131,7 +131,9 @@ class _LoginState extends State<Login> {
                 ],
               ),
               SizedBox(height: 16.h,),
-              OutlinedButton(onPressed: (){}, child: Row(
+              OutlinedButton(onPressed: (){
+                _signWithGoogle();
+              }, child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SvgPicture.asset(ImagesManager.google),
@@ -161,6 +163,17 @@ class _LoginState extends State<Login> {
     } on FirebaseAuthException catch (e) {
       UIUtils.showMsg(AppLocalizations.of(context)!.invalid_email_password, ColorsManager.red);
       UIUtils.hideLoading(context);
+    }
+  }
+
+  Future<void> _signWithGoogle() async {
+    try{
+      await FirebaseService.signInWithGoogle(context);
+      UIUtils.showMsg(AppLocalizations.of(context)!.successfully_login,Colors.green);
+      Navigator.pushReplacementNamed(context, Routes.mainLayout);
+    }catch(e){
+      UIUtils.showMsg(AppLocalizations.of(context)!.some_thing_wrong, ColorsManager.red);
+      print(e.toString());
     }
   }
 }

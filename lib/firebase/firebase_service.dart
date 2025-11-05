@@ -1,6 +1,8 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:evently/core/UIUtils.dart';
 import 'package:evently/core/resources/constant_manager.dart';
 import 'package:evently/core/routes_manager/routes.dart';
 import 'package:evently/models/login_request.dart';
@@ -8,11 +10,13 @@ import 'package:evently/models/register_request.dart';
 import 'package:evently/models/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class FirebaseService {
 
   static Future<UserCredential> register(RegisterRequest request) async {
-    UserCredential credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+    UserCredential credential = await FirebaseAuth.instance
+        .createUserWithEmailAndPassword(
       email: request.email,
       password: request.password,
     );
@@ -21,7 +25,8 @@ class FirebaseService {
 
 
   static Future<UserCredential> login(LoginRequest request) async {
-    UserCredential credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+    UserCredential credential = await FirebaseAuth.instance
+        .signInWithEmailAndPassword(
       email: request.email,
       password: request.password,
     );
@@ -34,26 +39,63 @@ class FirebaseService {
   }
 
 
-  static Future<void>  addUserToFirebase(UserModel user) async {
-    FirebaseFirestore db =FirebaseFirestore.instance;
-    CollectionReference<Map<String, dynamic>> usersCollection= db.collection(ConstantManager.users);
-    DocumentReference<Map<String, dynamic>> userDoc =usersCollection.doc(user.userId);
+  static Future<void> addUserToFirebase(UserModel user) async {
+    FirebaseFirestore db = FirebaseFirestore.instance;
+    CollectionReference<Map<String, dynamic>> usersCollection = db.collection(
+        ConstantManager.users);
+    DocumentReference<Map<String, dynamic>> userDoc = usersCollection.doc(
+        user.userId);
     await userDoc.set({
-      "id":user.userId,
-      "email":user.email,
-      "name":user.userName,
+      "id": user.userId,
+      "email": user.email,
+      "name": user.userName,
     });
   }
 
 
-
-  static Future<UserModel> getUserFromFirestore(String id) async {
-    FirebaseFirestore db =FirebaseFirestore.instance;
-    CollectionReference<Map<String, dynamic>> usersCollection=db.collection(ConstantManager.users);
-    DocumentReference<Map<String, dynamic>> userDoc =usersCollection.doc(id);
+  static Future<UserModel?> getUserFromFirestore(String id) async {
+    FirebaseFirestore db = FirebaseFirestore.instance;
+    CollectionReference<Map<String, dynamic>> usersCollection = db.collection(
+        ConstantManager.users);
+    DocumentReference<Map<String, dynamic>> userDoc = usersCollection.doc(id);
     DocumentSnapshot<Map<String, dynamic>> docSnapshot = await userDoc.get();
-    var  json =docSnapshot.data();
-    return UserModel(userId: json?["id"], email: json?["email"], userName: json?["name"]);
+    var json = docSnapshot.data();
+    if (json == null) {
+      print("User document data is null for id: $id");
+      return null;
+    }
+    return UserModel(
+        userId: json["id"], email: json["email"], userName: json["name"]);
   }
 
+
+  static Future<void> signInWithGoogle(BuildContext context) async {
+    final GoogleSignIn signIn = GoogleSignIn.instance;
+    signIn.initialize(
+        clientId: "230468482007-9fr6sq7p2aghjr779ioc3ssn8qidusg4.apps.googleusercontent.com",
+        serverClientId: "230468482007-d8nsferc4brf8pbeg6cecs8iprd4ne0u.apps.googleusercontent.com");
+
+    final GoogleSignInAccount? googleUser = await signIn.authenticate();
+    if (googleUser == null) return;
+    final GoogleSignInAuthentication googleAuth = googleUser.authentication;
+    final credential = GoogleAuthProvider.credential(
+        idToken: googleAuth.idToken);
+    UserCredential userCredential = await FirebaseAuth.instance
+        .signInWithCredential(credential);
+    UIUtils.showLoading(context);
+    UserModel? existingUser = await getUserFromFirestore(
+        userCredential.user!.uid);
+    if (existingUser == null) {
+      UserModel newUser = UserModel(
+        userId: userCredential.user!.uid,
+        email: userCredential.user!.email ?? "no email",
+        userName: userCredential.user!.displayName ?? "Google User",
+      );
+      await addUserToFirebase(newUser);
+      UserModel.currentUser = newUser;
+    } else {
+      UserModel.currentUser = existingUser;
+    }
+    UIUtils.hideLoading(context);
+  }
 }
