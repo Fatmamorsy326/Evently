@@ -9,6 +9,49 @@ class AppLocalizationsAr extends AppLocalizations {
   AppLocalizationsAr([String locale = 'ar']) : super(locale);
 
   @override
+  String get email_required => 'البريد الإلكتروني مطلوب';
+
+  @override
+  String get create_event_successfully => 'تم إنشاء الحدث بنجاح';
+
+  @override
+  String get email_not_valid => 'البريد الإلكتروني غير صالح';
+
+  @override
+  String get password_required => 'كلمة المرور مطلوبة';
+
+  @override
+  String get password_too_short => 'يجب أن تكون كلمة المرور 8 أحرف على الأقل';
+
+  @override
+  String get password_not_strong =>
+      'يجب أن تحتوي كلمة المرور على حرف كبير وحرف صغير ورقم';
+
+  @override
+  String get name_required => 'الاسم مطلوب';
+
+  @override
+  String get name_too_short => 'يجب أن يحتوي الاسم على 3 أحرف على الأقل';
+
+  @override
+  String get repassword_required => 'تأكيد كلمة المرور مطلوب';
+
+  @override
+  String get password_not_match => 'كلمة المرور غير متطابقة';
+
+  @override
+  String get title_required => 'العنوان مطلوب';
+
+  @override
+  String get title_not_valid => 'من فضلك أدخل عنوانًا صالحًا';
+
+  @override
+  String get description_required => 'الوصف مطلوب';
+
+  @override
+  String get description_not_valid => 'من فضلك أدخل وصفًا صالحًا';
+
+  @override
   String get register => 'تسجيل';
 
   @override

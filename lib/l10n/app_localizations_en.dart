@@ -9,6 +9,49 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
+  String get email_required => 'Email is required';
+
+  @override
+  String get create_event_successfully => 'Event created successfully';
+
+  @override
+  String get email_not_valid => 'Email not valid';
+
+  @override
+  String get password_required => 'Password is required';
+
+  @override
+  String get password_too_short => 'Password should be at least 8 characters';
+
+  @override
+  String get password_not_strong =>
+      'The password must contain an uppercase letter, a lowercase letter and a number';
+
+  @override
+  String get name_required => 'Name is required';
+
+  @override
+  String get name_too_short => 'Name should be at least 3 characters';
+
+  @override
+  String get repassword_required => 'Re-password is required';
+
+  @override
+  String get password_not_match => 'Password does not match';
+
+  @override
+  String get title_required => 'Title is required';
+
+  @override
+  String get title_not_valid => 'Please, enter a valid title';
+
+  @override
+  String get description_required => 'Description is required';
+
+  @override
+  String get description_not_valid => 'Please, enter a valid description';
+
+  @override
   String get register => 'Register';
 
   @override

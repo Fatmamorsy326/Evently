@@ -1,9 +1,9 @@
 import 'package:evently/core/UIUtils.dart';
 import 'package:evently/core/resources/colors_manager.dart';
 import 'package:evently/core/resources/images_manager.dart';
+import 'package:evently/core/resources/validation.dart';
 import 'package:evently/core/routes_manager/routes.dart';
 import 'package:evently/core/widgets/custom_text_button.dart';
-import 'package:evently/features/Authentication/validation.dart';
 import 'package:evently/firebase/firebase_service.dart';
 import 'package:evently/l10n/app_localizations.dart';
 import 'package:evently/models/register_request.dart';
@@ -75,7 +75,7 @@ class _RegisterState extends State<Register> {
                ),
                TextFormField(
                  controller: nameController,
-                 validator: Validation.nameValidation,
+                 validator: (value) => Validation.nameValidation(value, context),
                  keyboardType: TextInputType.name,
                  decoration: InputDecoration(
                    prefixIcon: Icon(Icons.person),
@@ -85,7 +85,7 @@ class _RegisterState extends State<Register> {
                SizedBox(height: 16.h,),
                TextFormField(
                  controller: emailController,
-                 validator: Validation.emailValidation,
+                 validator: (value) => Validation.emailValidation(value, context),
                  keyboardType: TextInputType.emailAddress,
                  decoration: InputDecoration(
                    prefixIcon: Icon(Icons.email),
@@ -95,7 +95,7 @@ class _RegisterState extends State<Register> {
                SizedBox(height: 16.h,),
                TextFormField(
                  controller: passwordController,
-                 validator: Validation.passwordValidation,
+                 validator: (value) => Validation.emailValidation(value, context),
                  obscureText: isSecurePassword,
                  keyboardType: TextInputType.visiblePassword,
                  decoration: InputDecoration(
@@ -109,7 +109,7 @@ class _RegisterState extends State<Register> {
                SizedBox(height: 16.h,),
                TextFormField(
                  validator: (value) {
-                   return Validation.rePasswordValidation(rePasswordController.text, passwordController.text);
+                   return Validation.rePasswordValidation(rePasswordController.text, passwordController.text,context);
                  },
                  controller: rePasswordController,
                  keyboardType: TextInputType.visiblePassword,

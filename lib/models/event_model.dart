@@ -8,11 +8,22 @@ class EventModel {
   String title;
   String description;
   DateTime date;
-  TimeOfDay time;
   double latitude;
   double longitude;
 
-  EventModel({required this.id,required this.category, required this.title,required this.description,required this.date,required this.time,required this.latitude,required this.longitude});
+  EventModel({required this.id,required this.category, required this.title,required this.description,required this.date,required this.latitude,required this.longitude});
+
+  EventModel.fromJson(Map<String,dynamic>json,BuildContext context): this(id: json["id"],title: json["title"],description: json["description"],longitude: json["longitude"],latitude: json["latitude"],date: json["date"],category:CategoryModel.categories(context).firstWhere((category) => category.id==json["categoryId"],) );
+
+  Map<String,dynamic> toJson()=>{
+    "id": id,
+    "categoryId":category.id,
+    "title" :title,
+    "description":description,
+    "date": date,
+    "latitude":latitude,
+    "longitude":longitude,
+  };
 
 
   static List<EventModel> events=[
@@ -22,7 +33,6 @@ class EventModel {
       title: "Football Championship",
       description: "Local football tournament finals at Cairo Stadium.",
       date: DateTime(2025, 11, 10),
-      time: const TimeOfDay(hour: 17, minute: 30),
       latitude: 30.0444,
       longitude: 31.2357,
     ),
@@ -32,7 +42,6 @@ class EventModel {
       title: "Mona’s Birthday Party",
       description: "Celebrate Mona’s birthday with cake and music!",
       date: DateTime(2025, 11, 12),
-      time: const TimeOfDay(hour: 19, minute: 0),
       latitude: 30.0500,
       longitude: 31.2400,
     ),
@@ -42,7 +51,6 @@ class EventModel {
       title: "Pizza Night",
       description: "Enjoy different types of pizza with friends.",
       date: DateTime(2025, 11, 14),
-      time: const TimeOfDay(hour: 20, minute: 0),
       latitude: 30.0600,
       longitude: 31.2500,
     ),
@@ -52,7 +60,6 @@ class EventModel {
       title: "Weekend Getaway",
       description: "Join us for a relaxing beach trip to Ain Sokhna.",
       date: DateTime(2025, 11, 20),
-      time: const TimeOfDay(hour: 8, minute: 0),
       latitude: 29.6000,
       longitude: 32.3167,
     ),
@@ -62,7 +69,6 @@ class EventModel {
       title: "Book Club Meeting",
       description: "Discuss 'The Alchemist' with fellow readers.",
       date: DateTime(2025, 11, 22),
-      time: const TimeOfDay(hour: 18, minute: 30),
       latitude: 30.0700,
       longitude: 31.2300,
     ),
@@ -72,7 +78,6 @@ class EventModel {
       title: "Flutter Workshop",
       description: "Learn Flutter basics and build your first app.",
       date: DateTime(2025, 11, 25),
-      time: const TimeOfDay(hour: 10, minute: 0),
       latitude: 30.0450,
       longitude: 31.2200,
     ),

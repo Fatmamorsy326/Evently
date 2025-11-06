@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:evently/core/UIUtils.dart';
 import 'package:evently/core/resources/constant_manager.dart';
 import 'package:evently/core/routes_manager/routes.dart';
+import 'package:evently/models/event_model.dart';
 import 'package:evently/models/login_request.dart';
 import 'package:evently/models/register_request.dart';
 import 'package:evently/models/user_model.dart';
@@ -38,34 +39,26 @@ class FirebaseService {
     Navigator.pushReplacementNamed(context, Routes.login);
   }
 
+  static CollectionReference<UserModel> _getUserCollection(){
+    FirebaseFirestore db = FirebaseFirestore.instance;
+     return db.collection(
+        ConstantManager.users).withConverter<UserModel>(fromFirestore: (snapshot, options) => UserModel.fromJson(snapshot.data()!), toFirestore: (user, options) => user.toJson(),
+    );
+  }
 
   static Future<void> addUserToFirebase(UserModel user) async {
-    FirebaseFirestore db = FirebaseFirestore.instance;
-    CollectionReference<Map<String, dynamic>> usersCollection = db.collection(
-        ConstantManager.users);
-    DocumentReference<Map<String, dynamic>> userDoc = usersCollection.doc(
-        user.userId);
-    await userDoc.set({
-      "id": user.userId,
-      "email": user.email,
-      "name": user.userName,
-    });
+    CollectionReference<UserModel> usersCollection =_getUserCollection();
+    DocumentReference<UserModel> userDoc = usersCollection.doc(user.userId);
+    await userDoc.set(user);
   }
 
 
   static Future<UserModel?> getUserFromFirestore(String id) async {
-    FirebaseFirestore db = FirebaseFirestore.instance;
-    CollectionReference<Map<String, dynamic>> usersCollection = db.collection(
-        ConstantManager.users);
-    DocumentReference<Map<String, dynamic>> userDoc = usersCollection.doc(id);
-    DocumentSnapshot<Map<String, dynamic>> docSnapshot = await userDoc.get();
-    var json = docSnapshot.data();
-    if (json == null) {
-      print("User document data is null for id: $id");
-      return null;
-    }
-    return UserModel(
-        userId: json["id"], email: json["email"], userName: json["name"]);
+    CollectionReference<UserModel> usersCollection =_getUserCollection();
+    DocumentReference<UserModel> userDoc = usersCollection.doc(id);
+    DocumentSnapshot<UserModel> docSnapshot = await userDoc.get();
+    UserModel? user = docSnapshot.data();
+    return user;
   }
 
 
@@ -97,5 +90,23 @@ class FirebaseService {
       UserModel.currentUser = existingUser;
     }
     UIUtils.hideLoading(context);
+  }
+
+  static CollectionReference<EventModel> _getEventCollection(BuildContext context){
+    FirebaseFirestore db=FirebaseFirestore.instance;
+   return db.collection(ConstantManager.events).withConverter(fromFirestore: (snapshot, options) => EventModel.fromJson(snapshot.data()!,context), toFirestore: (event, options) => event.toJson(),);
+  }
+  static Future<void> addEventToFirebase(EventModel event,BuildContext context) async {
+    CollectionReference<EventModel> eventCollection=_getEventCollection(context);
+    DocumentReference<EventModel> eventDoc =eventCollection.doc();
+    event.id=eventDoc.id;
+    await eventDoc.set(event);
+  }
+  static Future<EventModel?> getEventFromFirebase(String id,BuildContext context) async {
+  CollectionReference<EventModel> eventCollection =_getEventCollection(context);
+  DocumentReference<EventModel> eventDoc=eventCollection.doc();
+  DocumentSnapshot<EventModel> docSnapshot = await eventDoc.get();
+  EventModel? event =docSnapshot.data();
+  return event;
   }
 }

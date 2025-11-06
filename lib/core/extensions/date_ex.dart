@@ -5,4 +5,10 @@ extension DateEx on DateTime{
     DateFormat date=DateFormat("MMM");
     return date.format(this);
   }
+  String get formattedDate{
+    return DateFormat("yMMMMd").format(this);
+}
+String get formattedTime{
+    return DateFormat.jm().format(this);
+}
 }

@@ -35,7 +35,7 @@ class LoveTap extends StatelessWidget {
           Expanded(
             child: ListView.builder(
               padding: EdgeInsets.zero,
-              itemBuilder: (context, index) => EventItem(event: EventModel(id: "1",category: CategoryModel.allCategories(context)[5], title: "This is a Birthday Party", description: "sdfghjm", date: DateTime.now(), time: TimeOfDay.now(),latitude:	31.205753 ,longitude: 29.924526
+              itemBuilder: (context, index) => EventItem(event: EventModel(id: "1",category: CategoryModel.allCategories(context)[5], title: "This is a Birthday Party", description: "sdfghjm", date: DateTime.now(),latitude:	31.205753 ,longitude: 29.924526
               ),),
               itemCount: 5,),
           )

@@ -98,6 +98,90 @@ abstract class AppLocalizations {
     Locale('en'),
   ];
 
+  /// No description provided for @email_required.
+  ///
+  /// In en, this message translates to:
+  /// **'Email is required'**
+  String get email_required;
+
+  /// No description provided for @create_event_successfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Event created successfully'**
+  String get create_event_successfully;
+
+  /// No description provided for @email_not_valid.
+  ///
+  /// In en, this message translates to:
+  /// **'Email not valid'**
+  String get email_not_valid;
+
+  /// No description provided for @password_required.
+  ///
+  /// In en, this message translates to:
+  /// **'Password is required'**
+  String get password_required;
+
+  /// No description provided for @password_too_short.
+  ///
+  /// In en, this message translates to:
+  /// **'Password should be at least 8 characters'**
+  String get password_too_short;
+
+  /// No description provided for @password_not_strong.
+  ///
+  /// In en, this message translates to:
+  /// **'The password must contain an uppercase letter, a lowercase letter and a number'**
+  String get password_not_strong;
+
+  /// No description provided for @name_required.
+  ///
+  /// In en, this message translates to:
+  /// **'Name is required'**
+  String get name_required;
+
+  /// No description provided for @name_too_short.
+  ///
+  /// In en, this message translates to:
+  /// **'Name should be at least 3 characters'**
+  String get name_too_short;
+
+  /// No description provided for @repassword_required.
+  ///
+  /// In en, this message translates to:
+  /// **'Re-password is required'**
+  String get repassword_required;
+
+  /// No description provided for @password_not_match.
+  ///
+  /// In en, this message translates to:
+  /// **'Password does not match'**
+  String get password_not_match;
+
+  /// No description provided for @title_required.
+  ///
+  /// In en, this message translates to:
+  /// **'Title is required'**
+  String get title_required;
+
+  /// No description provided for @title_not_valid.
+  ///
+  /// In en, this message translates to:
+  /// **'Please, enter a valid title'**
+  String get title_not_valid;
+
+  /// No description provided for @description_required.
+  ///
+  /// In en, this message translates to:
+  /// **'Description is required'**
+  String get description_required;
+
+  /// No description provided for @description_not_valid.
+  ///
+  /// In en, this message translates to:
+  /// **'Please, enter a valid description'**
+  String get description_not_valid;
+
   /// No description provided for @register.
   ///
   /// In en, this message translates to:

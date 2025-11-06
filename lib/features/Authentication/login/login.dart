@@ -1,9 +1,9 @@
 import 'package:evently/core/UIUtils.dart';
 import 'package:evently/core/resources/colors_manager.dart';
 import 'package:evently/core/resources/images_manager.dart';
+import 'package:evently/core/resources/validation.dart';
 import 'package:evently/core/routes_manager/routes.dart';
 import 'package:evently/core/widgets/custom_text_button.dart';
-import 'package:evently/features/Authentication/validation.dart';
 import 'package:evently/firebase/firebase_service.dart';
 import 'package:evently/l10n/app_localizations.dart';
 import 'package:evently/models/login_request.dart';
@@ -60,7 +60,7 @@ class _LoginState extends State<Login> {
               SizedBox(height: 16.h,),
               TextFormField(
                 controller: emailController,
-                validator: Validation.emailValidation,
+                validator: (value) => Validation.emailValidation(value, context),
                 keyboardType: TextInputType.emailAddress,
                 decoration: InputDecoration(
                   prefixIcon: Icon(Icons.email),
@@ -70,7 +70,7 @@ class _LoginState extends State<Login> {
               SizedBox(height: 16.h,),
               TextFormField(
                 controller: passwordController,
-                validator: Validation.passwordValidation,
+                validator: (value) => Validation.passwordValidation(value, context),
                 obscureText: isSecurePassword,
                 keyboardType: TextInputType.visiblePassword,
                 decoration: InputDecoration(

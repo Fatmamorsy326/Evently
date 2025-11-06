@@ -23,7 +23,7 @@ class _CustomTabBarState extends State<CustomTabBar> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: CategoryModel.allCategories(context).length,
+      length: widget.categories.length,
       child: TabBar(
         onTap: _onTap,
         isScrollable: true,
