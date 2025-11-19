@@ -1,6 +1,7 @@
 import 'package:evently/core/resources/colors_manager.dart';
 import 'package:evently/core/widgets/custom_tab_bar.dart';
 import 'package:evently/core/widgets/event_item.dart';
+import 'package:evently/firebase/firebase_service.dart';
 import 'package:evently/l10n/app_localizations.dart';
 import 'package:evently/models/category_model.dart';
 import 'package:evently/models/event_model.dart';
@@ -10,9 +11,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
-class HomeTap extends StatelessWidget {
+class HomeTap extends StatefulWidget {
   const HomeTap({super.key});
 
+  @override
+  State<HomeTap> createState() => _HomeTapState();
+}
+
+class _HomeTapState extends State<HomeTap> {
+  late CategoryModel selectedCategory = CategoryModel.allCategories(context)[0];
   @override
   Widget build(BuildContext context) {
     var configProvider=Provider.of<ConfigProvider>(context);
@@ -73,17 +80,33 @@ class HomeTap extends StatelessWidget {
                 selectedFgColor: ColorsManager.blue,
                 selectedBgColor: ColorsManager.white,
                 categories: CategoryModel.allCategories(context),
+                itemOnClicked: (category) {
+                  selectedCategory=category;
+                  setState(() {
+
+                  });
+                },
               ),
 
             ],
           ),
         ),
-        Expanded(
-          child: ListView.builder(
-            padding: EdgeInsets.zero,
-            itemBuilder: (context, index) => EventItem(event: EventModel(id: "1",category: CategoryModel.allCategories(context)[7], title: "This is a Birthday Party", description: "sdfghjm", date: DateTime.now(),latitude:	31.205753 ,longitude: 29.924526),),
-            itemCount: 5,),
-        )
+        StreamBuilder(stream: FirebaseService.getEventFromFirebase(context,selectedCategory), builder:(context, snapshot) {
+          if(snapshot.connectionState== ConnectionState.waiting){
+            return Center(child: CircularProgressIndicator(),);
+          }
+          if(snapshot.hasError){
+            return Center(child: Text(snapshot.hasError.toString()),);
+          }
+          List<EventModel> events =snapshot.data ?? [];
+          return Expanded(
+            child: ListView.builder(
+              padding: EdgeInsets.zero,
+              itemBuilder: (context, index) => EventItem(event: events[index],),
+              itemCount: events.length,),
+          );
+        }, ),
+
       ],
     );
   }

@@ -177,7 +177,7 @@ class _CreateEventState extends State<CreateEvent> {
 
   Future<void> _createEvent() async {
     if(_formKey.currentState?.validate()== false)return;
-    EventModel event =EventModel(id: "", category: selectedCategory, title: titleController.text, description: descriptionController.text, date: selectedDateTime, latitude: 30.0000, longitude: 31.2200);
+    EventModel event =EventModel(id: "", category: selectedCategory, title: titleController.text, description: descriptionController.text, date: selectedDateTime, latitude: 31.098899, longitude: 29.768523);
     UIUtils.showLoading(context);
     await FirebaseService.addEventToFirebase(event, context);
     UIUtils.hideLoading(context);

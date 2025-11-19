@@ -1,6 +1,8 @@
 import 'package:evently/core/resources/colors_manager.dart';
 import 'package:evently/core/resources/images_manager.dart';
 import 'package:evently/features/main_layout/location_tap/event_shortcut_item.dart';
+import 'package:evently/firebase/firebase_service.dart';
+import 'package:evently/models/category_model.dart';
 import 'package:evently/models/event_model.dart';
 import 'package:evently/providers/config_provider.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +19,6 @@ class LocationTap extends StatefulWidget {
 }
 
 class _LocationTapState extends State<LocationTap> {
-
   late GoogleMapController _controller;
   LatLng? initLocation;
   Location location=Location();
@@ -58,28 +59,49 @@ class _LocationTapState extends State<LocationTap> {
       body: Stack(
         children: [
           Container(
-            child: initLocation == null ? Center(child: CircularProgressIndicator(),): GoogleMap(
-              mapType: MapType.normal,
-              zoomControlsEnabled: false,
-              myLocationEnabled: true,
-              onMapCreated: (controller) {
-                _controller =controller;
-              },
-              // onCameraMove: (position) => print(position),
-              initialCameraPosition: CameraPosition(target: initLocation! ,zoom: 17),
-              markers: EventModel.events.map((e) => Marker(
-                  infoWindow: InfoWindow(title: e.title),
-                  markerId: MarkerId(e.id) ,
-                  position: LatLng(e.latitude, e.longitude)),
-              ).toSet(),
-            ),
+            child: initLocation == null ? Center(child: CircularProgressIndicator(),): StreamBuilder(stream: FirebaseService.getEventFromFirebase(context, CategoryModel.allCategories(context)[0]), builder: (context, snapshot) {
+              if (snapshot.hasError) {
+                return Center(child: Text('Error: ${snapshot.error}'));
+              }
+
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(child: CircularProgressIndicator());
+              }
+              List<EventModel> eventList= snapshot.data ?? [];
+              return GoogleMap(
+                mapType: MapType.normal,
+                zoomControlsEnabled: false,
+                myLocationEnabled: true,
+                onMapCreated: (controller) {
+                  _controller =controller;
+                },
+                // onCameraMove: (position) => print(position),
+                initialCameraPosition: CameraPosition(target: initLocation! ,zoom: 17),
+                markers: _setMarkers(eventList),
+              );
+            },),
           ),
+
+
+
+
           Positioned(
               bottom: 32.h,
               left: 0,
               right: 0,
               height: 94.h,
-              child: ListView.builder(itemBuilder: (context, index) => EventShortcutItem(eventModel: EventModel.events[0],),itemCount: 5,scrollDirection: Axis.horizontal,)),
+              child: StreamBuilder(stream:FirebaseService.getEventFromFirebase(context, CategoryModel.allCategories(context)[0]) , builder: (context, snapshot) {
+                if (snapshot.hasError) {
+                  return Center(child: Text('Error: ${snapshot.error}'));
+                }
+
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(child: CircularProgressIndicator());
+                }
+                List<EventModel> eventList= snapshot.data ?? [];
+                return ListView.builder(itemBuilder: (context, index) => EventShortcutItem(eventModel: eventList[index]),itemCount: 5,scrollDirection: Axis.horizontal,);
+              },)
+          ),
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
@@ -91,5 +113,13 @@ class _LocationTapState extends State<LocationTap> {
 
   Future<void> _returnToMyLocation() async {
     await _controller.animateCamera(duration: Duration(milliseconds: 600),CameraUpdate.newCameraPosition(CameraPosition(target: initLocation!,zoom: 17)));
+  }
+
+  _setMarkers(List<EventModel> events) {
+    return events.map((e) => Marker(
+        infoWindow: InfoWindow(title: e.title),
+        markerId: MarkerId(e.id) ,
+        position: LatLng(e.latitude, e.longitude)),
+    ).toSet();
   }
 }

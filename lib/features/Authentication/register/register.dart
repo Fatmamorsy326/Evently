@@ -152,7 +152,7 @@ class _RegisterState extends State<Register> {
     try {
       UIUtils.showLoading(context);
       UserCredential userCredential= await FirebaseService.register(RegisterRequest(password: passwordController.text, email: emailController.text));
-      await FirebaseService.addUserToFirebase(UserModel(userId: userCredential.user!.uid, email: emailController.text, userName: nameController.text));
+      await FirebaseService.addUserToFirebase(UserModel(userId: userCredential.user!.uid, email: emailController.text, userName: nameController.text,favEventsIds: []));
       UIUtils.hideLoading(context);
       UIUtils.showMsg(AppLocalizations.of(context)!.successfully_registration,Colors.green);
       Navigator.pushReplacementNamed(context, Routes.login);

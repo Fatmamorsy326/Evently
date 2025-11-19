@@ -44,9 +44,11 @@ class _CustomTabBarState extends State<CustomTabBar> {
   }
 
   void _onTap(int index) {
-    widget.itemOnClicked?.call(CategoryModel.categories(context)[index]);
+    widget.itemOnClicked?.call(widget.categories[index]);
     setState(() {
       selectedIndex=index;
     });
   }
+
+
 }

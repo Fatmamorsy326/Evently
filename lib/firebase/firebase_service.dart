@@ -5,12 +5,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:evently/core/UIUtils.dart';
 import 'package:evently/core/resources/constant_manager.dart';
 import 'package:evently/core/routes_manager/routes.dart';
+import 'package:evently/models/category_model.dart';
 import 'package:evently/models/event_model.dart';
 import 'package:evently/models/login_request.dart';
 import 'package:evently/models/register_request.dart';
 import 'package:evently/models/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class FirebaseService {
@@ -83,6 +85,7 @@ class FirebaseService {
         userId: userCredential.user!.uid,
         email: userCredential.user!.email ?? "no email",
         userName: userCredential.user!.displayName ?? "Google User",
+        favEventsIds: [],
       );
       await addUserToFirebase(newUser);
       UserModel.currentUser = newUser;
@@ -96,17 +99,58 @@ class FirebaseService {
     FirebaseFirestore db=FirebaseFirestore.instance;
    return db.collection(ConstantManager.events).withConverter(fromFirestore: (snapshot, options) => EventModel.fromJson(snapshot.data()!,context), toFirestore: (event, options) => event.toJson(),);
   }
+
+
   static Future<void> addEventToFirebase(EventModel event,BuildContext context) async {
     CollectionReference<EventModel> eventCollection=_getEventCollection(context);
     DocumentReference<EventModel> eventDoc =eventCollection.doc();
     event.id=eventDoc.id;
     await eventDoc.set(event);
   }
-  static Future<EventModel?> getEventFromFirebase(String id,BuildContext context) async {
+
+
+  static Stream<List<EventModel>> getEventFromFirebase(BuildContext context,CategoryModel category) async* {
   CollectionReference<EventModel> eventCollection =_getEventCollection(context);
-  DocumentReference<EventModel> eventDoc=eventCollection.doc();
-  DocumentSnapshot<EventModel> docSnapshot = await eventDoc.get();
-  EventModel? event =docSnapshot.data();
-  return event;
+  Stream<QuerySnapshot<EventModel>> eventCollectionSnapShot= eventCollection.where("categoryId",isEqualTo: category.id =="0" ? null :category.id).orderBy("date").snapshots();
+  Stream<List<EventModel>> events = eventCollectionSnapShot.map(
+    (eventSnapShot) => eventSnapShot.docs.map((eventSnapShot) => eventSnapShot.data(),).toList(),
+  );
+  yield* events;
+
   }
+
+
+  static Future<List<EventModel>> getFavEvents(BuildContext context)async{
+    if (UserModel.currentUser!.favEventsIds.isEmpty) {
+      return [];
+    }
+    CollectionReference<EventModel> eventCollection =_getEventCollection(context);
+    QuerySnapshot<EventModel> eventSnapShot = await eventCollection.where("id",whereIn: UserModel.currentUser!.favEventsIds).get();
+    List<EventModel> events =eventSnapShot.docs.map((eventSnapShot) => eventSnapShot.data(),).toList();
+    return events;
+  }
+
+  static Future<void> addEventToFav(String eventId){
+    UserModel.currentUser!.favEventsIds.add(eventId);
+    UIUtils.showMsg("added successfully", Colors.green);
+    CollectionReference<UserModel> userCollection =_getUserCollection();
+    DocumentReference<UserModel> userDoc=userCollection.doc(UserModel.currentUser!.userId);
+    return userDoc.set(UserModel.currentUser!);
+  }
+
+
+  static Future<void> removeEventFromFav(String eventId){
+    bool successfulRemoving =UserModel.currentUser!.favEventsIds.remove(eventId);
+    if(successfulRemoving){
+      UIUtils.showMsg("removed successfully", Colors.green);
+    }else{
+      UIUtils.showMsg("there is an error", Colors.red);
+    }
+    CollectionReference<UserModel> userCollection =_getUserCollection();
+    DocumentReference<UserModel> userDoc=userCollection.doc(UserModel.currentUser!.userId);
+    return userDoc.set(UserModel.currentUser!);
+  }
+
+
+
 }
