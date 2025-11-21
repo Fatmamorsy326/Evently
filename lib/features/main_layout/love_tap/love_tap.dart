@@ -15,6 +15,22 @@ class LoveTap extends StatefulWidget {
 }
 
 class _LoveTapState extends State<LoveTap> {
+  Stream<List<EventModel>>? _favEventsFuture;
+  String searchQuery="";
+
+  void _loadFavEvents() {
+    setState(() {
+      _favEventsFuture = FirebaseService.getFavEvents(context);
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _loadFavEvents();
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -36,9 +52,12 @@ class _LoveTapState extends State<LoveTap> {
                   borderSide: BorderSide(width: 1,color: ColorsManager.blue),
                 ),
               ),
+              onChanged: (value) {
+                _search(value);
+              },
             ),
           ),
-          FutureBuilder(future: FirebaseService.getFavEvents(context), builder:(context, snapshot) {
+          StreamBuilder(stream: _favEventsFuture, builder:(context, snapshot) {
             if(snapshot.connectionState== ConnectionState.waiting){
               return Expanded(child: Center(child: CircularProgressIndicator(),));
             }
@@ -46,7 +65,8 @@ class _LoveTapState extends State<LoveTap> {
               print(snapshot.error.toString());
               return Expanded(child: Center(child: Text("Error loading favorites: ${snapshot.error.toString()}",),));
             }
-            List<EventModel> events =snapshot.data ?? [];
+            List<EventModel> allEvents =snapshot.data ?? [];
+            List<EventModel> events=_filterdEvents(allEvents);
             if (events.isEmpty) {
               return Expanded(
                 child: Center(
@@ -59,7 +79,7 @@ class _LoveTapState extends State<LoveTap> {
             return Expanded(
               child: ListView.builder(
                 padding: EdgeInsets.zero,
-                itemBuilder: (context, index) => EventItem(event: events[index],),
+                itemBuilder: (context, index) => EventItem(event: events[index],onFavoriteChanged: _loadFavEvents,),
                 itemCount: events.length,),
             );
           },),
@@ -68,4 +88,23 @@ class _LoveTapState extends State<LoveTap> {
       ),
     );
   }
+
+  void _search(String value) {
+    setState(() {
+      searchQuery=value.trim().toLowerCase();
+    });
+  }
+
+  List<EventModel> _filterdEvents(List<EventModel> allEvents) {
+    if(searchQuery.isEmpty){
+      return allEvents;
+    }
+
+    return allEvents.where((event) {
+      return event.title.toLowerCase().contains(searchQuery) || event.description.toLowerCase().contains(searchQuery);
+    }).toList();
+
+  }
+
+
 }

@@ -12,4 +12,10 @@ class ImagesManager {
   static const String sport="${base}Sport.png";
   static const String workshop="${base}workshop.png";
   static const String rectangle="${base}Rectangle 76.png";
+  static const String route="${base}Mask group.png";
+  static const String onboardingHeader="${base}Group 4.png";
+  static const String beingCreative="${base}being-creative.png";
+  static const String beingCreative1="${base}being-creative (1).png";
+  static const String beingCreative2="${base}being-creative (2).png";
+  static const String hotTrending="${base}hot-trending.png";
 }

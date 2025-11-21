@@ -10,7 +10,6 @@ import 'package:evently/providers/config_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-
 class HomeTap extends StatefulWidget {
   const HomeTap({super.key});
 
@@ -20,6 +19,7 @@ class HomeTap extends StatefulWidget {
 
 class _HomeTapState extends State<HomeTap> {
   late CategoryModel selectedCategory = CategoryModel.allCategories(context)[0];
+
   @override
   Widget build(BuildContext context) {
     var configProvider=Provider.of<ConfigProvider>(context);
@@ -65,12 +65,12 @@ class _HomeTapState extends State<HomeTap> {
               SizedBox(
                 height: 8.h,
               ),
-              Row(
-                children: [
-                  Icon(Icons.location_on,color: ColorsManager.white,),
-                  Text("Cairo , Egypt",style: Theme.of(context).textTheme.headlineMedium,),
-                ],
-              ),
+              // Row(
+              //   children: [
+              //     Icon(Icons.location_on,color: ColorsManager.white,),
+              //     Text("Cairo , Egypt",style: Theme.of(context).textTheme.headlineMedium,),
+              //   ],
+              // ),
               SizedBox(
                 height: 16.h,
               ),
@@ -99,6 +99,15 @@ class _HomeTapState extends State<HomeTap> {
             return Center(child: Text(snapshot.hasError.toString()),);
           }
           List<EventModel> events =snapshot.data ?? [];
+          if (events.isEmpty) {
+            return Expanded(
+              child: Center(
+                child: Text(
+                  "No events yet",
+                ),
+              ),
+            );
+          }
           return Expanded(
             child: ListView.builder(
               padding: EdgeInsets.zero,

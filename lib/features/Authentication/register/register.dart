@@ -95,7 +95,7 @@ class _RegisterState extends State<Register> {
                SizedBox(height: 16.h,),
                TextFormField(
                  controller: passwordController,
-                 validator: (value) => Validation.emailValidation(value, context),
+                 validator: (value) => Validation.passwordValidation(value, context),
                  obscureText: isSecurePassword,
                  keyboardType: TextInputType.visiblePassword,
                  decoration: InputDecoration(

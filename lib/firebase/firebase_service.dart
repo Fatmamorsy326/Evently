@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:evently/core/UIUtils.dart';
+import 'package:evently/core/resources/colors_manager.dart';
 import 'package:evently/core/resources/constant_manager.dart';
 import 'package:evently/core/routes_manager/routes.dart';
 import 'package:evently/models/category_model.dart';
@@ -120,15 +121,31 @@ class FirebaseService {
   }
 
 
-  static Future<List<EventModel>> getFavEvents(BuildContext context)async{
+  // static Future<List<EventModel>> getFavEvents(BuildContext context)async{
+  //   if (UserModel.currentUser!.favEventsIds.isEmpty) {
+  //     return [];
+  //   }
+  //   CollectionReference<EventModel> eventCollection =_getEventCollection(context);
+  //   QuerySnapshot<EventModel> eventSnapShot = await eventCollection.where("id",whereIn: UserModel.currentUser!.favEventsIds).get();
+  //   List<EventModel> events =eventSnapShot.docs.map((eventSnapShot) => eventSnapShot.data(),).toList();
+  //   return events;
+  // }
+
+  static Stream<List<EventModel>> getFavEvents(BuildContext context)async*{
+
     if (UserModel.currentUser!.favEventsIds.isEmpty) {
-      return [];
+      yield [];
+      return;
     }
     CollectionReference<EventModel> eventCollection =_getEventCollection(context);
-    QuerySnapshot<EventModel> eventSnapShot = await eventCollection.where("id",whereIn: UserModel.currentUser!.favEventsIds).get();
-    List<EventModel> events =eventSnapShot.docs.map((eventSnapShot) => eventSnapShot.data(),).toList();
-    return events;
+
+    Stream<QuerySnapshot<EventModel>> eventCollectionSnapShot =eventCollection.where("id",whereIn: UserModel.currentUser!.favEventsIds).snapshots();
+    Stream<List<EventModel>> events = eventCollectionSnapShot.map(
+          (eventSnapShot) => eventSnapShot.docs.map((eventSnapShot) => eventSnapShot.data(),).toList(),
+    );
+    yield* events;
   }
+
 
   static Future<void> addEventToFav(String eventId){
     UserModel.currentUser!.favEventsIds.add(eventId);
@@ -151,6 +168,32 @@ class FirebaseService {
     return userDoc.set(UserModel.currentUser!);
   }
 
+
+  static Future<void> deleteEvent(EventModel event,BuildContext context)async{
+    try{
+      CollectionReference<EventModel> eventCollection =_getEventCollection(context);
+      await eventCollection.doc(event.id).delete();
+      UIUtils.showMsg("deleted successfully", Colors.green);
+      Navigator.pop(context);
+    }catch(e){
+      UIUtils.showMsg(e.toString(), ColorsManager.red);
+    }
+  }
+
+
+
+  static Future<void> editEvent(EventModel event,BuildContext context) async {
+    try{
+      CollectionReference<EventModel> eventCollection =_getEventCollection(context);
+      DocumentReference<EventModel> eventDoc = eventCollection.doc(event.id);
+      print(eventDoc);
+      await eventDoc.set(event);
+      UIUtils.showMsg("edited successfully", Colors.green);
+      Navigator.pop(context);
+    }catch(e){
+      UIUtils.showMsg(e.toString(), ColorsManager.red);
+    }
+  }
 
 
 }

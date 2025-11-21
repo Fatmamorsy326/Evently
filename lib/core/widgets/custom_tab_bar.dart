@@ -4,12 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomTabBar extends StatefulWidget {
-  CustomTabBar({super.key,required this.categories,required this.selectedBgColor,required this.selectedFgColor,required this.unselectedBgColor,required this.unselectedFgColor,this.itemOnClicked});
+  CustomTabBar({super.key,required this.categories,required this.selectedBgColor,required this.selectedFgColor,required this.unselectedBgColor,required this.unselectedFgColor,this.itemOnClicked,this.initialIndex=0});
   List<CategoryModel> categories;
   Color selectedBgColor;
   Color unselectedBgColor;
   Color selectedFgColor;
   Color unselectedFgColor;
+  int initialIndex;
   void Function(CategoryModel category)?itemOnClicked;
 
   @override
@@ -17,13 +18,30 @@ class CustomTabBar extends StatefulWidget {
 }
 
 class _CustomTabBarState extends State<CustomTabBar> {
-  int selectedIndex=0;
-  
+  late int selectedIndex;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    selectedIndex=widget.initialIndex==-1?0:widget.initialIndex;
+    super.initState();
+  }
+
+  @override
+  void didUpdateWidget(CustomTabBar oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.initialIndex != widget.initialIndex) {
+      setState(() {
+        selectedIndex = widget.initialIndex;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: widget.categories.length,
+      initialIndex: selectedIndex,
       child: TabBar(
         onTap: _onTap,
         isScrollable: true,

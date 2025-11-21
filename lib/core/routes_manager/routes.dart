@@ -7,4 +7,9 @@ class Routes {
   static const String loveTap="/loveTap";
   static const String profileTap="/profileTap";
   static const String createEvent="/createEvent";
+  static const String eventDetails="/eventDetails";
+  static const String editEvent="/editEvent";
+  static const String onboarding="/onboarding";
+  static const String splashScreen="/splashScreen";
+  static const String locationPickerMap="/locationPickerMap";
 }

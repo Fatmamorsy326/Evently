@@ -1,6 +1,7 @@
 import 'package:evently/core/extensions/date_ex.dart';
 import 'package:evently/core/resources/colors_manager.dart';
 import 'package:evently/core/resources/images_manager.dart';
+import 'package:evently/core/routes_manager/routes.dart';
 import 'package:evently/firebase/firebase_service.dart';
 import 'package:evently/models/event_model.dart';
 import 'package:evently/models/user_model.dart';
@@ -9,7 +10,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class EventItem extends StatefulWidget{
   EventModel event;
-  EventItem({super.key,required this.event});
+  final VoidCallback? onFavoriteChanged;
+  EventItem({super.key,required this.event,this.onFavoriteChanged});
 
   @override
   State<EventItem> createState() => _EventItemState();
@@ -21,6 +23,7 @@ class _EventItemState extends State<EventItem> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
+        Navigator.pushNamed(context, Routes.eventDetails,arguments: widget.event);
       },
       child: Container(
         margin:REdgeInsets.symmetric(horizontal: 16, vertical: 8) ,
@@ -74,5 +77,8 @@ class _EventItemState extends State<EventItem> {
     setState(() {
 
     });
+    if (widget.onFavoriteChanged != null) {
+      widget.onFavoriteChanged!();
+    }
   }
 }

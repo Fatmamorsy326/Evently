@@ -82,9 +82,6 @@ class _LocationTapState extends State<LocationTap> {
             },),
           ),
 
-
-
-
           Positioned(
               bottom: 32.h,
               left: 0,
@@ -99,6 +96,18 @@ class _LocationTapState extends State<LocationTap> {
                   return Center(child: CircularProgressIndicator());
                 }
                 List<EventModel> eventList= snapshot.data ?? [];
+                if (eventList.isEmpty) {
+                  return Expanded(
+                    child: Center(
+                      child: Text(
+                        "No events yet",
+                      ),
+                    ),
+                  );
+                }
+                if(eventList.length==1){
+                  return EventShortcutItem(eventModel: eventList[0]);
+                }
                 return ListView.builder(itemBuilder: (context, index) => EventShortcutItem(eventModel: eventList[index]),itemCount: 5,scrollDirection: Axis.horizontal,);
               },)
           ),

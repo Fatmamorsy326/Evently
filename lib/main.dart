@@ -12,21 +12,28 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await PrefsManager.init();
+  final prefs =await SharedPreferences.getInstance();
+  final seenOnBoarding=prefs.getBool("seenOnboarding") ?? false;
+
   if(FirebaseAuth.instance.currentUser != null){
     UserModel.currentUser = await FirebaseService.getUserFromFirestore(FirebaseAuth.instance.currentUser!.uid);
   }
   return runApp(ChangeNotifierProvider(
-      child: Evently(),
+      child: Evently(seenOnBoarding: seenOnBoarding,),
     create: (context) => ConfigProvider(),
   )
   );
 }
 class Evently extends StatelessWidget{
+  bool seenOnBoarding;
+  Evently({required this.seenOnBoarding});
+
   @override
   Widget build(BuildContext context) {
     var configProvider=Provider.of<ConfigProvider>(context);
@@ -37,7 +44,7 @@ class Evently extends StatelessWidget{
       builder: (context,child)=> MaterialApp(
         debugShowCheckedModeBanner: false,
         onGenerateRoute: RoutesManager.router,
-        initialRoute: FirebaseAuth.instance.currentUser==null?Routes.login:Routes.mainLayout ,
+        initialRoute: Routes.splashScreen ,
         theme:ThemeManager.light,
         darkTheme: ThemeManager.dark,
         themeMode: configProvider.currentTheme,
